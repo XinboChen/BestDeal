@@ -4,7 +4,10 @@ var mongoose = require("mongoose");
 var bcrypt = require("bcrypt");
 
 var UserSchema = new Schema({
-   email:{
+    name:{
+        type: String
+    },
+    email:{
         type: String,
         required: true,
         unique: true
@@ -17,6 +20,10 @@ var UserSchema = new Schema({
     //dealMarked: [String],
     //dealPosted: [String]
 });
+
+const User = module.exports = mongoose.model("user", UserSchema);
+
+module.exports
 
 UserSchema.pre("save", function (next){
     var user = this;
@@ -51,4 +58,3 @@ UserSchema.method.comparePassword = function(password, callback){
     });
 };
 
-module.exports = mongoose.model("user", UserSchema);

@@ -6,16 +6,16 @@ app.config(function($routeProvider){
        templateUrl:"index.html"
    })
     .when('/login',{
-       controller:"loginController",
-       templateUrl:"app/views/login.html"
+       templateUrl:"app/views/login.html",
+       controller:"loginController"
    })
     .when('/register',{
-       controller:"loginController",
-       templateUrl:"app/views/login.html"
+       templateUrl:"app/views/login.html",
+       controller:"loginController"
    })
     .when('/logout',{
-       controller:"logoutController",
-       templateUrl:"app/views/login.html"
+       templateUrl:"app/views/login.html",
+       controller:"logoutController"
    })
     .otherwise({
        redirectTo: "/home"
