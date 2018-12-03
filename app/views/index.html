@@ -1,0 +1,63 @@
+<html ng-app = "app">
+    <head>
+        <title>Welcome to your BestDeal!</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <body>
+        <nav class = "navbar navbar-expand-sm navbar-light bg-light ">
+            <a class = "navbar-brand" href="#">
+                <img src="img/logo.svg" width="30" height="30" alt="">
+                BestDeal
+            </a>
+            <div class="container-fluid">
+                <ul class = "nav navbar-nav">
+                    <li class = "navbar-item">
+                        <a class = "nav-link" href = "/views/travel.html">Travel</a>
+                    </li>
+                </ul>
+                <ul class = "nav navbar-nav">
+                    <li class = "navbar-item">
+                        <a class = "nav-link" href = "views/electronics.html">Electronics</a>
+                    </li>
+                </ul>
+                <ul class = "nav navbar-nav">
+                    <li class = "navbar-item">
+                        <a class = "nav-link" href = "views/food.html">Food</a>
+                    </li>
+                </ul>
+                <ul class = "nav navbar-nav">
+                    <li class = "navbar-item">
+                        <a class = "nav-link" href = "views/book.html">Book</a>
+                    </li>
+                </ul>
+                <ul class = "nav navbar-nav">
+                    <li class = "navbar-item">
+                        <a class = "nav-link" href = "#/views/car.html">Car</a>
+                    </li>
+                </ul>
+                <form class = "form-inline my-2 my-lg-0">
+                    <ul>
+<!--                    <ul ng-if = "!isAuthenticated()">-->
+                        <a role="button" class = "btn btn-outline-success mr-sm-2" href="#/login">Login</a>
+                        <a role="button" class = "btn btn-outline-danger" href="#/register">Register</a>
+                    </ul>
+                    
+<!--
+                    <ul ng-if = "isAuthenticated()">
+                        <a role="button" class = "btn btn-outline-success mr-sm-2" href="#/logout">Logout</a>
+                        
+                    </ul>
+-->
+                </form>
+            </div>
+        </nav>
+        
+        <container class = "bg-info">
+            <main ng-view></main>
+        </container>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.min.js"></script>
+<!--        <script src="app/app.js"></script>-->
+    </body>
+</html>
