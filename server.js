@@ -3,7 +3,7 @@ var engines = require('consolidate');
 
 app = express();
 
-app.set('views', __dirname + '/app/views');
+app.set('pages', __dirname + '/app/bestDeal/page/home');
 app.engine('html', engines.mustache);
 app.set('view engine', 'html'); 
 app.get('*',(req, res)=> {
