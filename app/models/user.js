@@ -1,60 +1,41 @@
-var mongoose = require("mongoose");
-// a libaray to convert string to hash
-// Saving password to DB is very dangerous, so hash and salt it before save
-var bcrypt = require("bcrypt");
+var mongoose = require( 'mongoose' );
+var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
 
-var UserSchema = new Schema({
-    name:{
-        type: String
-    },
-    email:{
-        type: String,
-        required: true,
-        unique: true
-   },
-    password: {
-        type: String,
-        required:true
-    }//,
-    //displayName: String,
-    //dealMarked: [String],
-    //dealPosted: [String]
+var userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  hash: String,
+  salt: String
 });
 
-const User = module.exports = mongoose.model("user", UserSchema);
-
-module.exports
-
-UserSchema.pre("save", function (next){
-    var user = this;
-    if(this.isModified("password") || this.isNew) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if(err){
-                // callback with error
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, function(err, hash){
-                if(err){
-                    return next(err);
-                }
-                user.password = hash;
-                // correct callback
-                next();
-            });
-        });
-    }else{
-        // callback with nothing/empty
-        return next();
-    }
-});
-
-UserSchema.method.comparePassword = function(password, callback){
-    bcrypt.compare(password, this.password, function(err, isMacth){
-        if(err){
-            return callback(err);
-        }else{
-            return callback(null, isMacth);
-        }
-    });
+userSchema.methods.setPassword = function(password){
+  this.salt = crypto.randomBytes(16).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
+userSchema.methods.validPassword = function(password) {
+  var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+  return this.hash === hash;
+};
+
+userSchema.methods.generateJwt = function() {
+  var expiry = new Date();
+  expiry.setDate(expiry.getDate() + 7);
+
+  return jwt.sign({
+    _id: this._id,
+    email: this.email,
+    name: this.name,
+    exp: parseInt(expiry.getTime() / 1000),
+  }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
+};
+
+mongoose.model('User', userSchema);
