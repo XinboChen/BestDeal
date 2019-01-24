@@ -3,7 +3,7 @@ var app = require('./app');
 var debug = require('debug')('BestDeal:server');
 var http = require('http');
 
-var port = normalizePort(process.env.PORT ||  '3003');
+var port = normalizePort(process.env.PORT ||  '8888');
 app.set('port', port);
 
 var server = http.createServer(app);

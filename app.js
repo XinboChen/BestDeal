@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var mongoose = require('mongoose');
+var config = require('./config/database')
 // [SH] Require Passport
 var passport = require('passport');
 
@@ -14,14 +16,19 @@ var passport = require('passport');
 require('passport');
 
 
-// [SH] Bring in the routes for the API (delete the default routes)
-var routesApi = require('./routes/index');
-
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+mongoose.Promise = require('bluebird');
+mongoose.connect(config.database, {promiseLibrary: require('bluebird')})
+    .then(() => console.log('Mongo connection successful'))
+    .catch((err) => onsole.error(err));
+
+// UI entry
+app.use(express.static(__dirname + '/public'));
+
+// routers
+var routesApi = require('./routes/api');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -34,8 +41,9 @@ app.use(cors());
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());
 
-// [SH] Use the API routes when path starts with /api
-app.use('/index', routesApi);
+// [SH] Use the API routes when path starts with /
+app.use('/*', routesApi);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,8 +51,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// error handlers
 
 // [SH] Catch unauthorised errors
 app.use(function (err, req, res, next) {
@@ -54,27 +60,6 @@ app.use(function (err, req, res, next) {
   }
 });
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 
 module.exports = app;
