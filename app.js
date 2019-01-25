@@ -26,10 +26,6 @@ mongoose.connect(config.database, {promiseLibrary: require('bluebird')})
 // UI entry
 app.use(express.static(__dirname + '/public'));
 
-// routers
-var routesApi = require('./routes/api');
-
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -41,7 +37,9 @@ app.use(cors());
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());
 
-// [SH] Use the API routes when path starts with /
+// routers
+var routesApi = require('./routes/api');
+// direct to home page 
 app.use('/*', routesApi);
 
 

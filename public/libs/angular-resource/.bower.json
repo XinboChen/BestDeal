@@ -1,0 +1,20 @@
+{
+  "name": "angular-resource",
+  "version": "1.7.6",
+  "license": "MIT",
+  "main": "./angular-resource.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.7.6"
+  },
+  "homepage": "https://github.com/angular/bower-angular-resource",
+  "_release": "1.7.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.7.6",
+    "commit": "4240ac186c6ed4dfcc51bab0d829c5b1c5e190d2"
+  },
+  "_source": "https://github.com/angular/bower-angular-resource.git",
+  "_target": "*",
+  "_originalSource": "angular-resource"
+}

@@ -9,7 +9,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/*', function(req, res) {
-    res.sendfile('./public/views/home/index.html');
+    res.sendfile('./public/views/layoutTemplate.html');
 });
 
 /*POST new user sign up*/
