@@ -1,1 +1,1 @@
-angular.module('app', ['ngRoute', 'appRouters','ngResource', 'HomeCtrl', 'AboutCtrl']);
+angular.module('app', ['ngRoute', 'appRouters','ngResource', 'HomeCtrl', 'AboutCtrl', 'SignupCtrl']);
