@@ -1,30 +1,22 @@
 angular.module('SignupCtrl', [])
-.controller('SignupController',function() {
-    return{
-        restruct: 'E',
-        controller:function($scope){
-            
-            var signup = this;
-            var message = "";
-            
-            signup.credentials = {
-                username: "",
-                password: ""
-            };
-             
-            signup.register = function(){
-                console.log("Submitting registration");
-                console.log(signup.credentials.username); 
-//                authentication
-//                    .register(signup.credentials)
-//                    .error(function(err){
-//                    alert(err);
-//                    })
-//                    .then(function(){
-//                    $location.path('profile');      
-//                });
-            };
-        }
-        
-    };  
-});
+.controller('SignupController',
+            ['$scope', '$location', '$http', 'Authentication', function($scope, $location, $http,
+            Authentication){
+                
+                
+                $scope.authentication = Authentication;
+                
+                // if user is signed in, then redirect back to home
+                if($scope.authentication.user){
+                    $location.path('/');
+                }
+
+                $scope.register = function(){
+                    $http.post('/api/signup', $scope.credentials).then(function successCallback(response){
+                        $scope.authentication.user = response;
+                        $location.path('/');
+                    }, function errorCallback(response){
+                        $scope.error = response.message;
+                    });
+                };
+}]);

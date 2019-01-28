@@ -17,7 +17,7 @@ router.get('/*', function(req, res) {
 router.post('/api/signup', function(req, res) {
     res.send('singup API');
    if(!req.body.username || !req.body.password) {
-        res.json({success: false, msg: 'Please fill in username or password.'});      
+        return res.json({success: false, msg: 'Please fill in username or password.'});      
    }else{
        var newUser = new User({
            username: req.body.username,
@@ -28,7 +28,7 @@ router.post('/api/signup', function(req, res) {
           if(err){
               return res.json({success: false, msg: 'Username already exists.'});
           } 
-          res.json({success: true, msg: 'User created successfully!'}); 
+          return res.json({success: true, msg: 'User created successfully!'}); 
        });
    }
 });
